@@ -4,8 +4,11 @@ package com.motaharinia.msjpautility.entity;
 import org.hibernate.search.annotations.Field;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Column;
+import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Date;
@@ -21,6 +24,7 @@ import java.util.Date;
  *     این کلاس به عنوان کلاس پدر تمام کلاسهای انتیتی آماده شده است و به تمام انتیتی ها فیلدهای استانداردی را اضافه میکتد
  */
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 public class GenericEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -68,6 +72,7 @@ public class GenericEntity implements Serializable {
      * تاریخی که انتیتی آخرین بار ویرایش شده است
      */
 //    @CustomEntityDeleteArchive
+    @LastModifiedDate
     @Column(name = "update_at", columnDefinition = OracleUtility.COLUMN_DEFINITION_DATE)
     private Date updateAt;
 
@@ -80,6 +85,7 @@ public class GenericEntity implements Serializable {
     /**
      * آی دی کاربری که انتیتی را آخرین بار ویرایش کرده است
      */
+    @LastModifiedBy
     @Column(name = "update_user_id")
     private Integer updateUserId;
 
