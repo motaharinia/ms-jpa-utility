@@ -7,10 +7,7 @@ import com.motaharinia.msjpautility.search.annotation.SearchDataColumn;
 import java.util.Date;
 
 /**
- * User: https://github.com/motaharinia<br>
- * Date: 2020-06-14<br>
- * Time: 20:49:58<br>
- * Description:<br>
+* @author https://github.com/motaharinia<br>
  *     اینترفیس نمونه جهت تست SearchDataModelTests
  */
 @JsonDeserialize

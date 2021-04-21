@@ -1,10 +1,7 @@
 package com.motaharinia.msjpautility.search.data;
 
 /**
- * User: https://github.com/motaharinia<br>
- * Date: 2020-06-16<br>
- * Time: 23:14:13<br>
- * Description:<br>
+* @author https://github.com/motaharinia<br>
  *     اینام مقادیر ثابت جهت نمایش افقی مطالب
  */
 public enum SearchDataColAlignEnum {

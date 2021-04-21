@@ -1,10 +1,7 @@
 package com.motaharinia.msjpautility.search.filter;
 
 /**
- * User: https://github.com/motaharinia<br>
- * Date: 2020-06-16<br>
- * Time: 23:27:46<br>
- * Description:<br>
+* @author https://github.com/motaharinia<br>
  * مقادیر ثابت and و or بر روی جستجوی پیشرفته
  */
 public enum SearchFilterNextConditionOperatorEnum {
@@ -18,20 +15,15 @@ public enum SearchFilterNextConditionOperatorEnum {
      * SELECT a FROM EntityA a WHERE :value NOT MEMBER OF a.fieldCollection
      */
     OR("OR"),
-
     ;
 
     private final String value;
 
-    private SearchFilterNextConditionOperatorEnum(String value) {
+    SearchFilterNextConditionOperatorEnum(String value) {
         this.value = value;
     }
 
     public String getValue() {
         return value;
-    }
-
-    public String toString() {
-        return super.toString();
     }
 }

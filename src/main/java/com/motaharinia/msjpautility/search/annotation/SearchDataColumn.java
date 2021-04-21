@@ -10,10 +10,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * User: https://github.com/motaharinia<br>
- * Date: 2020-06-17<br>
- * Time: 18:28:02<br>
- * Description:<br>
+* @author https://github.com/motaharinia<br>
  * از این انوتیشن برای تنظیم کردن مشخصات نمایشی ستونهای خروجی داده استفاده میشود<br>
  * فیلد ایندکس و نام ضروری هستند
  */

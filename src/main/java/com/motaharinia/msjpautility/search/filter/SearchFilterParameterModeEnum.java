@@ -1,10 +1,7 @@
 package com.motaharinia.msjpautility.search.filter;
 
 /**
- * User: https://github.com/motaharinia<br>
- * Date: 2020-06-16<br>
- * Time: 23:09:56<br>
- * Description:<br>
+* @author https://github.com/motaharinia<br>
  *     مقادیر ثابت نوع جستجو<br>
  * مقادیر ثابت نوع جستجوی ماژولهای دیگر از این کلاس اکستند میشوند
  */
@@ -25,7 +22,4 @@ public enum SearchFilterParameterModeEnum {
         return value;
     }
 
-    public String toString() {
-        return super.toString();
-    }
 }

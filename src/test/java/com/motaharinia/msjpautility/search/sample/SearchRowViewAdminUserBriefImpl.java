@@ -3,10 +3,7 @@ package com.motaharinia.msjpautility.search.sample;
 import java.util.Date;
 
 /**
- * User: https://github.com/motaharinia<br>
- * Date: 2020-06-14<br>
- * Time: 20:49:58<br>
- * Description:<br>
+* @author https://github.com/motaharinia<br>
  * کلاس نمونه جهت تست SearchDataModelTests
  */
 public class SearchRowViewAdminUserBriefImpl implements SearchRowViewAdminUserBrief {

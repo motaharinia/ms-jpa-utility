@@ -1,0 +1,65 @@
+# Change Log
+#### [0.0.1] - 2017-03-15
+* Added:
+* Changed:
+* Fixed:
+
+#### [0.0.2] - 2021-02-04
+* Added: 
+  * DbColumnConfiguration.COLUMN_DEFINITION_TIME
+  * DbColumnConfiguration.COLUMN_DEFINITION_TIMESTAMP
+  * DbColumnConfiguration.COLUMN_DEFINITION_TIME_WITH_TIMEZONE
+  * DbColumnConfiguration.COLUMN_DEFINITION_TIMESTAMP_WITH_TIMEZONE
+* Changed:
+  * MsUtility version from 0.0.1 to 0.0.2
+  * GenericEntity to CustomEntity with LocalDateTime fields
+* Fixed:
+
+#### [0.0.3] - 2021-02-07
+* Added:
+* Changed:
+  * update MsUtility version to 0.0.3
+* Fixed:
+
+#### [0.0.4] - 2021-02-09
+* Added:
+* Changed:
+  * update MsUtility version to 0.0.4
+* Fixed:
+
+#### [0.0.5] - 2021-02-11
+* Added:
+* Changed:
+  * makes the code more clean
+  * update MsUtility version to 0.0.5
+* Fixed:
+
+#### [0.0.6] - 2021-02-22
+* Added:
+* Changed:
+  * update MsUtility version to 0.0.6
+* Fixed:
+
+#### [0.0.7] - 2021-03-12
+* Added:
+* Changed:
+  * update MsUtility version to 0.0.7
+* Fixed:
+
+#### [0.0.8] - 2021-03-31
+* Added:
+* Changed:
+  * update MsUtility version to 0.0.8
+* Fixed:
+
+#### [0.0.9] - 2021-03-31
+* Added:
+* Changed:
+  * update MsUtility version to 0.0.9
+* Fixed:
+
+#### [0.0.10] - 2021-04-06
+* Added:
+* Changed:
+  * update MsUtility version to 0.0.10
+* Fixed:

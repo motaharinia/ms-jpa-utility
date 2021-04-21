@@ -1,7 +1,8 @@
 package com.motaharinia.msjpautility.search;
 
 import com.motaharinia.msjpautility.search.filter.SearchFilterSortModel;
-import com.motaharinia.msutility.json.CustomObjectMapper;
+import com.motaharinia.msutility.custom.customjson.CustomObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
@@ -12,14 +13,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 /**
- * User: https://github.com/motaharinia<br>
- * Date: 2020-06-14<br>
- * Time: 20:49:58<br>
- * Description:<br>
+* @author https://github.com/motaharinia<br>
  * کلاس تست SearchFilterModel
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class SearchFilterModelTests {
+@Slf4j
+class SearchFilterModelUnitTest {
 
     private final CustomObjectMapper mapper = new CustomObjectMapper();
 

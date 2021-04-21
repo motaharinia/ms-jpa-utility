@@ -1,10 +1,7 @@
 package com.motaharinia.msjpautility.search.filter;
 
 /**
- * User: https://github.com/motaharinia<br>
- * Date: 2020-06-16<br>
- * Time: 23:09:56<br>
- * Description:<br>
+* @author https://github.com/motaharinia<br>
  *     مقادیر ثابت عملیات شرط گذاری بر روی جستجوی پیشرفته
  */
 public enum SearchFilterOperationEnum {
@@ -65,20 +62,18 @@ public enum SearchFilterOperationEnum {
      * SELECT a FROM EntityA a WHERE :value NOT MEMBER OF a.fieldCollection
      */
     NOT_MEMBER_OF("NOT_MEMBER_OF"),
-
     ;
 
+    /**
+     * عملیات شرط گذاری بر روی جستجوی پیشرفته
+     */
     private final String value;
 
-    private SearchFilterOperationEnum(String value) {
+    SearchFilterOperationEnum(String value) {
         this.value = value;
     }
 
     public String getValue() {
         return value;
-    }
-
-    public String toString() {
-        return super.toString();
     }
 }
