@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
 * @author https://github.com/motaharinia<br>
- * کلاس نمونه جهت تست SearchDataModelTests
+ * کلاس نمونه جهت تست SearchDataDtoTests
  */
 public class SearchRowViewAdminUserBriefImpl implements SearchRowViewAdminUserBrief {
 

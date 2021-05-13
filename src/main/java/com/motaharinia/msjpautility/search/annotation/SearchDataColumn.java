@@ -1,8 +1,10 @@
 package com.motaharinia.msjpautility.search.annotation;
 
-import com.motaharinia.msjpautility.search.data.SearchDataColAlignEnum;
-import com.motaharinia.msjpautility.search.data.SearchDataColSearchTypeEnum;
-import com.motaharinia.msjpautility.search.data.SearchDataColSortTypeEnum;
+
+
+import com.motaharinia.msutility.custom.customdto.search.data.col.SearchDataColAlignEnum;
+import com.motaharinia.msutility.custom.customdto.search.data.col.SearchDataColSearchTypeEnum;
+import com.motaharinia.msutility.custom.customdto.search.data.col.SearchDataColSortTypeEnum;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

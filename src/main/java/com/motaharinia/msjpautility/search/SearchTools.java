@@ -1,77 +1,55 @@
-package com.motaharinia.msjpautility.search.data;
+package com.motaharinia.msjpautility.search;
 
+
+import com.motaharinia.msjpautility.jparepository.GenericSpecification;
 import com.motaharinia.msjpautility.search.annotation.SearchDataColumn;
-import com.motaharinia.msjpautility.search.filter.SearchFilterModel;
-import com.motaharinia.msjpautility.search.filter.SearchFilterOperationEnum;
+import com.motaharinia.msutility.custom.customdto.search.data.SearchDataDto;
+import com.motaharinia.msutility.custom.customdto.search.data.col.SearchDataColDto;
+import com.motaharinia.msutility.custom.customdto.search.data.col.SearchDataColSortTypeEnum;
+import com.motaharinia.msutility.custom.customdto.search.data.row.SearchDataRowDto;
+import com.motaharinia.msutility.custom.customdto.search.filter.SearchFilterDto;
+import com.motaharinia.msutility.custom.customdto.search.filter.restriction.SearchFilterOperationEnum;
+import com.motaharinia.msutility.custom.customdto.search.filter.sort.SearchFilterSortDto;
+import com.motaharinia.msutility.custom.customdto.search.filter.sort.SearchFilterSortTypeEnum;
 import com.motaharinia.msutility.custom.customexception.utility.UtilityException;
 import com.motaharinia.msutility.custom.customexception.utility.UtilityExceptionKeyEnum;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.reflections.ReflectionUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.util.ObjectUtils;
 
-import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.*;
 
-/**
- * @author https://github.com/motaharinia<br>
- * این کلاس مدل حاوی نتیجه جستجوی اطلاعات میباشد
- */
 
-@Slf4j
-@Data
-@NoArgsConstructor
-public class SearchDataModel implements Serializable {
-    /**
-     * شماره صفحه فعلی
-     */
-    private Integer page;
-    /**
-     * تعداد کل سطرهای قابل نمایش که صفحه بندی شده اند و به صفحات کوچکتر تبدیل شده اند
-     */
-    private Long records;
-    /**
-     * لیست سطرهای داده
-     */
-    private List<SearchDataRowModel> rowModelList = new ArrayList<>();
-    /**
-     * لیست اطلاعات ستونها
-     */
-    private List<SearchDataColModel> colModelList = new ArrayList<>();
-    /**
-     * تعداد صفحات در صفحه بندی اطلاعات
-     */
-    private Long total;
-    /**
-     * اطلاعات اضافی
-     */
-    private Map<String, String> userDataMap = new HashMap<>();
-
+public interface SearchTools {
 
     /**
      * متد سازنده مدل جستجوی داده که صفحه ای از اینتیرفیس ریپازیتوری دریافت شده از دیتابیس و مدل جستجو و اطلاعات اضافی را از ورودی دریافت میکند و مدل جستجوی داده را طبق آنها برای ارسال به کلاینت می سازد
      *
      * @param viewPage                صفحه ای از اینتیرفیس ریپازیتوری دریافت شده از دیتابیس
-     * @param searchFilterModel       مدل جستجو
+     * @param searchFilterDto         مدل جستجو
      * @param searchViewTypeInterface کلاس اینترفیس نوع نمایش خروجی که ستونهای(فیلدهای) خروجی داخل آن تعریف شده است
-     * @param userDataMap             خروجی: مدل جستجوی داده برای ارسال به کلاینت
+     * @param userDataMap             اطلاعات اضافی
+     * @return خروجی: مدل جستجوی داده برای ارسال به کلاینت
      */
-    public SearchDataModel(@NotNull Page<?> viewPage, @NotNull SearchFilterModel searchFilterModel, @NotNull Class searchViewTypeInterface, Map<String, String> userDataMap) {
-        this.page = searchFilterModel.getPage();
-        this.records = viewPage.getTotalElements();
-        this.total = (long) viewPage.getTotalPages();
+    @NotNull
+    static SearchDataDto buildSearchDataDto(@NotNull Page<?> viewPage, @NotNull SearchFilterDto searchFilterDto, @NotNull Class searchViewTypeInterface, Map<String, String> userDataMap) {
+        SearchDataDto searchDataDto = new SearchDataDto();
+        searchDataDto.setPage(searchFilterDto.getPage());
+        searchDataDto.setRecords(viewPage.getTotalElements());
+        searchDataDto.setTotal((long) viewPage.getTotalPages());
         if (userDataMap != null) {
-            this.userDataMap = userDataMap;
+            searchDataDto.setUserDataMap(userDataMap);
         }
 
-        //searchDataColModelList:
+        //searchDataColDtoList:
         HashMap<Integer, SearchDataColumn> indexAnnotationHashMap = new HashMap<>();
-        List<SearchDataColModel> searchDataColModelList = new ArrayList<>();
+        List<SearchDataColDto> searchDataColDtoList = new ArrayList<>();
 
         Set<Method> getterMethodSet1 = ReflectionUtils.getAllMethods(searchViewTypeInterface, ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
         getterMethodSet1.forEach(getterMethod -> {
@@ -81,38 +59,39 @@ public class SearchDataModel implements Serializable {
         });
         indexAnnotationHashMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
             try {
-                SearchDataColModel searchDataColModel = new SearchDataColModel();
-                searchDataColModel.setAlign(entry.getValue().align());
-                searchDataColModel.setFormatter(entry.getValue().formatter());
-                searchDataColModel.setIndex(String.valueOf(entry.getValue().index()));
-                searchDataColModel.setName(entry.getValue().name());
-                searchDataColModel.setSearchable(entry.getValue().searchable());
-                searchDataColModel.setSearchType(entry.getValue().searchType());
-                searchDataColModel.setSortable(entry.getValue().sortable());
-                searchDataColModel.setSortType(entry.getValue().sortType());
-                searchDataColModel.setWidth(entry.getValue().width());
-                if (searchDataColModel.getSortType().equals(SearchDataColSortTypeEnum.TEXT)) {
-                    searchDataColModel.setSearchFilterOperationList(Arrays.asList(SearchFilterOperationEnum.EQUAL, SearchFilterOperationEnum.MATCH, SearchFilterOperationEnum.MATCH_END, SearchFilterOperationEnum.MATCH_START, SearchFilterOperationEnum.IN, SearchFilterOperationEnum.NOT_IN));
+                SearchDataColDto searchDataColDto = new SearchDataColDto();
+                searchDataColDto.setAlign(entry.getValue().align());
+                searchDataColDto.setFormatter(entry.getValue().formatter());
+                searchDataColDto.setIndex(String.valueOf(entry.getValue().index()));
+                searchDataColDto.setName(entry.getValue().name());
+                searchDataColDto.setSearchable(entry.getValue().searchable());
+                searchDataColDto.setSearchType(entry.getValue().searchType());
+                searchDataColDto.setSortable(entry.getValue().sortable());
+                searchDataColDto.setSortType(entry.getValue().sortType());
+                searchDataColDto.setWidth(entry.getValue().width());
+                if (searchDataColDto.getSortType().equals(SearchDataColSortTypeEnum.TEXT)) {
+                    searchDataColDto.setSearchFilterOperationList(Arrays.asList(SearchFilterOperationEnum.EQUAL, SearchFilterOperationEnum.MATCH, SearchFilterOperationEnum.MATCH_END, SearchFilterOperationEnum.MATCH_START, SearchFilterOperationEnum.IN, SearchFilterOperationEnum.NOT_IN));
                 } else {
-                    searchDataColModel.setSearchFilterOperationList(Arrays.asList(SearchFilterOperationEnum.EQUAL, SearchFilterOperationEnum.GREATER_THAN, SearchFilterOperationEnum.GREATER_THAN_EQUAL, SearchFilterOperationEnum.LESS_THAN, SearchFilterOperationEnum.LESS_THAN_EQUAL, SearchFilterOperationEnum.IN, SearchFilterOperationEnum.NOT_IN));
+                    searchDataColDto.setSearchFilterOperationList(Arrays.asList(SearchFilterOperationEnum.EQUAL, SearchFilterOperationEnum.GREATER_THAN, SearchFilterOperationEnum.GREATER_THAN_EQUAL, SearchFilterOperationEnum.LESS_THAN, SearchFilterOperationEnum.LESS_THAN_EQUAL, SearchFilterOperationEnum.IN, SearchFilterOperationEnum.NOT_IN));
                 }
-                searchDataColModelList.add(searchDataColModel);
+                searchDataColDtoList.add(searchDataColDto);
             } catch (Exception exception) {
-                log.error("UTILITY_EXCEPTION.SearchDataModel.SearchDataModel() exception:",exception);
+                throw new UtilityException(SearchTools.class, UtilityExceptionKeyEnum.SEARCH_TOOLS_EXCEPTION, exception.getMessage());
             }
         });
-        this.colModelList = searchDataColModelList;
+        searchDataDto.setColList(searchDataColDtoList);
 
-        //searchDataRowModelList:
-        List<SearchDataRowModel> searchDataRowModelList = new ArrayList<>();
+        //searchDataRowDtoList:
+        List<SearchDataRowDto> searchDataRowDtoList = new ArrayList<>();
         viewPage.stream().forEach(item -> {
             try {
-                searchDataRowModelList.add(new SearchDataRowModel((Integer) item.getClass().getDeclaredMethod("getId").invoke(item), recursiveDataRowModelList(item, item.getClass(), new HashMap<>(), new HashMap<>()).toArray()));
+                searchDataRowDtoList.add(new SearchDataRowDto((Integer) item.getClass().getDeclaredMethod("getId").invoke(item), recursiveDataRowDtoList(item, item.getClass(), new HashMap<>(), new HashMap<>()).toArray()));
             } catch (Exception exception) {
-                log.error("UTILITY_EXCEPTION.SearchDataModel.SearchDataModel() exception:",exception);
+                throw new UtilityException(SearchTools.class, UtilityExceptionKeyEnum.SEARCH_TOOLS_EXCEPTION, exception.getMessage());
             }
         });
-        this.rowModelList = searchDataRowModelList;
+        searchDataDto.setRowList(searchDataRowDtoList);
+        return searchDataDto;
     }
 
 
@@ -120,17 +99,13 @@ public class SearchDataModel implements Serializable {
      * متد بازگشتی که شیی اینترفیس ریپازیتوری و هش مپ اندیس-متد و هش مپ اندیس-شیی آن اینترفیس را ورودی میگیرد و در نهایت لیستی از آرایه مقادیر ستونهای دیتای جستجو را خروجی میدهد
      *
      * @param object             شیی اینترفیس ریپازیتوری
+     * @param clazz             کلاس اینترفیس ریپازیتوری
      * @param indexMethodHashMap هش مپ اندیس-متد اینترفیس
      * @param indexObjectHashMap هش مپ اندیس-شیی اینترفیس
      * @return خروجی:  لیستی از آرایه مقادیر ستونهای دیتای جستجو
      */
     @NotNull
-    private List<Object> recursiveDataRowModelList(@NotNull Object object, Class clazz, @NotNull HashMap<Integer, Method> indexMethodHashMap, @NotNull HashMap<Integer, Object> indexObjectHashMap) {
-        if (ObjectUtils.isEmpty(clazz)) {
-            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "clazz");
-        }
-
-
+    static List<Object> recursiveDataRowDtoList(@NotNull Object object,@NotNull Class clazz, @NotNull HashMap<Integer, Method> indexMethodHashMap, @NotNull HashMap<Integer, Object> indexObjectHashMap) {
         Set<Method> getterMethodSet = ReflectionUtils.getAllMethods(clazz, ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
         getterMethodSet.forEach(getterMethod -> {
             try {
@@ -141,11 +116,11 @@ public class SearchDataModel implements Serializable {
                     } else {
                         getterMethod.setAccessible(true);
                         Object childObject = getterMethod.invoke(object);
-                        recursiveDataRowModelList(childObject, getterMethod.getReturnType(), indexMethodHashMap, indexObjectHashMap);
+                        recursiveDataRowDtoList(childObject, getterMethod.getReturnType(), indexMethodHashMap, indexObjectHashMap);
                     }
                 }
             } catch (Exception exception) {
-                log.error("UTILITY_EXCEPTION.SearchDataModel.recursiveDataRowModelList() exception:",exception);
+                throw new UtilityException(SearchTools.class, UtilityExceptionKeyEnum.SEARCH_TOOLS_EXCEPTION, exception.getMessage());
             }
         });
         List<Object> rowCellList = new ArrayList<>();
@@ -159,7 +134,7 @@ public class SearchDataModel implements Serializable {
                 }
 
             } catch (Exception exception) {
-                log.error("UTILITY_EXCEPTION.SearchDataModel.recursiveDataRowModelList() exception:",exception);
+                throw new UtilityException(SearchTools.class, UtilityExceptionKeyEnum.SEARCH_TOOLS_EXCEPTION, exception.getMessage());
             }
         });
         return rowCellList;
@@ -227,4 +202,50 @@ public class SearchDataModel implements Serializable {
 //            return "";
 //        }
 //    }
+
+
+    /**
+     * متدی که مشخصات جستجو  ریپازیتوری مورد نظر را از ورودی دریافت میکند و تمام موارد لیست شرطهای جستجو را به آن اضافه میکند
+     * تا در مرحله بعد این مشخصات جستجو به سمت ریپازیتوری برای جستجو در دیتابیس ارسال گردد
+     *
+     * @param searchFilterDto      مدل فیلتر داده
+     * @param genericSpecification مشخصات جستجو ریپازیتوری مورد نظر
+     * @return خروجی: مشخصات جستجوی ریپازیتوری حاوی شرایط جستجو
+     */
+    static GenericSpecification makeSpecificationFromSearchFilter(SearchFilterDto searchFilterDto, GenericSpecification genericSpecification) {
+        if (!ObjectUtils.isEmpty(searchFilterDto.getRestrictionList())) {
+            searchFilterDto.getRestrictionList().stream().forEach(item -> genericSpecification.add(item));
+        }
+        return genericSpecification;
+    }
+
+    /**
+     * این متد شیی صفحه بندی-مرتب سازی را مطابق اطلاعات دریافتی مدل جستجو تولید میکند
+     * تا در مرحله بعد این شیی به سمت ریپازیتوری برای جستجو در دیتابیس ارسال گردد
+     *
+     * @param searchFilterDto مدل فیلتر داده
+     * @return خروجی: شیی صفحه بندی-مرتب سازی جهت استفاده در ریپازیتوری
+     */
+    static Pageable makePageableFromSearchFilter(SearchFilterDto searchFilterDto) {
+        Sort allSort = null;
+        for (SearchFilterSortDto searchFilterSortDto : searchFilterDto.getSortList()) {
+            Sort newSort = null;
+            if (searchFilterSortDto.getType().equals(SearchFilterSortTypeEnum.ASC)) {
+                newSort = Sort.by(searchFilterSortDto.getFieldName()).ascending();
+            }
+            if (searchFilterSortDto.getType().equals(SearchFilterSortTypeEnum.DSC)) {
+                newSort = Sort.by(searchFilterSortDto.getFieldName()).descending();
+            }
+            if (ObjectUtils.isEmpty(allSort)) {
+                allSort = newSort;
+            } else {
+                allSort = allSort.and(newSort);
+            }
+        }
+        if (ObjectUtils.isEmpty(allSort)) {
+            return PageRequest.of(searchFilterDto.getPage(), searchFilterDto.getRows());
+        } else {
+            return PageRequest.of(searchFilterDto.getPage(), searchFilterDto.getRows(), allSort);
+        }
+    }
 }

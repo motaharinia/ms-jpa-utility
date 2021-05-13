@@ -8,7 +8,7 @@ import java.util.Date;
 
 /**
 * @author https://github.com/motaharinia<br>
- *     اینترفیس نمونه جهت تست SearchDataModelTests
+ *     اینترفیس نمونه جهت تست SearchDataDtoTests
  */
 @JsonDeserialize
 public interface SearchRowViewAdminUserBrief extends SearchRowView {

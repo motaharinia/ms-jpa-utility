@@ -1,7 +1,8 @@
 package com.motaharinia.msjpautility.jparepository;
 
-import com.motaharinia.msjpautility.search.filter.SearchFilterNextConditionOperatorEnum;
-import com.motaharinia.msjpautility.search.filter.SearchFilterRestrictionModel;
+
+import com.motaharinia.msutility.custom.customdto.search.filter.restriction.SearchFilterNextConditionOperatorEnum;
+import com.motaharinia.msutility.custom.customdto.search.filter.restriction.SearchFilterRestrictionDto;
 import com.motaharinia.msutility.custom.customfield.CustomDate;
 import com.motaharinia.msutility.custom.customfield.CustomDateTime;
 import com.motaharinia.msutility.custom.customjson.CustomObjectMapper;
@@ -26,14 +27,14 @@ public class GenericSpecification<T> implements Specification<T> {
 
     private final CustomObjectMapper customObjectMapper = new CustomObjectMapper();
 
-    private final List<SearchFilterRestrictionModel> searchFilterRestrictionModelList;
+    private final List<SearchFilterRestrictionDto> searchFilterRestrictionList;
 
     public GenericSpecification() {
-        this.searchFilterRestrictionModelList = new ArrayList<>();
+        this.searchFilterRestrictionList = new ArrayList<>();
     }
 
-    public void add(SearchFilterRestrictionModel searchFilterRestrictionModel) {
-        searchFilterRestrictionModelList.add(searchFilterRestrictionModel);
+    public void add(SearchFilterRestrictionDto searchFilterRestrictionDto) {
+        searchFilterRestrictionList.add(searchFilterRestrictionDto);
     }
 
     @Override
@@ -47,17 +48,17 @@ public class GenericSpecification<T> implements Specification<T> {
         Predicate predicate = null;
 
         //اضافه کردن شرطهای مدل فیلتر
-        for (SearchFilterRestrictionModel searchFilterRestrictionModel : searchFilterRestrictionModelList) {
+        for (SearchFilterRestrictionDto searchFilterRestrictionDto : searchFilterRestrictionList) {
             //شرط جدید
             newPredicate = null;
             try {
                 //مسیر انتیتی که روی آن شرط خواهیم زد
-                Path path = this.getPath(root, searchFilterRestrictionModel.getFieldName());
+                Path path = this.getPath(root, searchFilterRestrictionDto.getFieldName());
                 //مقداری که برای شرط در مدل فیلتر ست شده است
-                Object fieldValue = searchFilterRestrictionModel.getFieldValue();
+                Object fieldValue = searchFilterRestrictionDto.getFieldValue();
 
                 //سوییچ روی نوع شرط مدل فیلتر
-                switch (searchFilterRestrictionModel.getFieldOperation()) {
+                switch (searchFilterRestrictionDto.getFieldOperation()) {
 
                     case GREATER_THAN:
                         // بزرگتر از عدد یا تاریخ
@@ -157,26 +158,26 @@ public class GenericSpecification<T> implements Specification<T> {
                     case IN:
                         //مقدار فیلد انتیتی در بین یکی از گزینه های لیست مقادیر ورودی دلخواه باشد
                         //SELECT a FROM EntityA a WHERE a.field IN :valueCollection
-                        newPredicate = builder.in(path).value(searchFilterRestrictionModel.getFieldValue());
+                        newPredicate = builder.in(path).value(searchFilterRestrictionDto.getFieldValue());
                         break;
                     case NOT_IN:
                         //مقدار فیلد انتیتی در بین هیچ یک از گزینه های لیست مقادیر ورودی دلخواه نباشد
                         //SELECT a FROM EntityA a WHERE a.field NOT IN :valueCollection
-                        newPredicate = builder.not(path).in(searchFilterRestrictionModel.getFieldValue());
+                        newPredicate = builder.not(path).in(searchFilterRestrictionDto.getFieldValue());
                         break;
                     case MEMBER_OF:
                         //مقدار ورودی دلخواه عضوی از گزینه های فیلد انتیتی از نوع لیست باشد
                         //SELECT a FROM EntityA a WHERE :value MEMBER OF a.fieldCollection
-                        newPredicate = builder.isMember(searchFilterRestrictionModel.getFieldValue(), path);
+                        newPredicate = builder.isMember(searchFilterRestrictionDto.getFieldValue(), path);
                         break;
                     case NOT_MEMBER_OF:
                         //مقدار ورودی دلخواه عضوی از گزینه های فیلد انتیتی از نوع لیست نباشد
                         //SELECT a FROM EntityA a WHERE :value NOT MEMBER OF a.fieldCollection
-                        newPredicate = builder.isNotMember(searchFilterRestrictionModel.getFieldValue(), path);
+                        newPredicate = builder.isNotMember(searchFilterRestrictionDto.getFieldValue(), path);
                         break;
                 }
                 if (!ObjectUtils.isEmpty(newPredicate)) {
-                    predicate = this.addNextCondition(builder, searchFilterRestrictionModel, predicate, newPredicate);
+                    predicate = this.addNextCondition(builder, searchFilterRestrictionDto, predicate, newPredicate);
                 }
             } catch (Exception exception) {
                 log.error("UTILITY_EXCEPTION.GenericSpecification.toPredicate() exception:",exception);
@@ -190,16 +191,16 @@ public class GenericSpecification<T> implements Specification<T> {
      * این متد سازنده و مدل و شرط قبلی و شرط جدید را از ورودی میگرد و بر اساس نوع and یا or مدل شرط نهایی آن دو شرط ورودی را خروجی میدهد
      *
      * @param builder                      سازنده
-     * @param searchFilterRestrictionModel مدل
+     * @param searchFilterRestrictionDto مدل
      * @param predicate                    شرط قبلی
      * @param newPredicate                 شرط جدید
      * @return خروجی: شرط نهایی
      */
-    private Predicate addNextCondition(CriteriaBuilder builder, SearchFilterRestrictionModel searchFilterRestrictionModel, Predicate predicate, Predicate newPredicate) {
+    private Predicate addNextCondition(CriteriaBuilder builder, SearchFilterRestrictionDto searchFilterRestrictionDto, Predicate predicate, Predicate newPredicate) {
         if (ObjectUtils.isEmpty(predicate)) {
             predicate = newPredicate;
         } else {
-            if (searchFilterRestrictionModel.getNextConditionOperator().equals(SearchFilterNextConditionOperatorEnum.AND)) {
+            if (searchFilterRestrictionDto.getNextConditionOperator().equals(SearchFilterNextConditionOperatorEnum.AND)) {
                 predicate = builder.and(predicate, newPredicate);
             } else {
                 predicate = builder.or(predicate, newPredicate);
