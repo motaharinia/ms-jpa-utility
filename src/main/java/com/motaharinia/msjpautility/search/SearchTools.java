@@ -4,9 +4,8 @@ package com.motaharinia.msjpautility.search;
 import com.motaharinia.msjpautility.jparepository.GenericSpecification;
 import com.motaharinia.msjpautility.search.annotation.SearchDataColumn;
 import com.motaharinia.msutility.custom.customdto.search.data.SearchDataDto;
-import com.motaharinia.msutility.custom.customdto.search.data.col.SearchDataColDto;
-import com.motaharinia.msutility.custom.customdto.search.data.col.SearchDataColSortTypeEnum;
-import com.motaharinia.msutility.custom.customdto.search.data.row.SearchDataRowDto;
+import com.motaharinia.msutility.custom.customdto.search.data.columnconfig.SearchDataColumnConfigDto;
+import com.motaharinia.msutility.custom.customdto.search.data.columnconfig.SearchDataColumnConfigSortTypeEnum;
 import com.motaharinia.msutility.custom.customdto.search.filter.SearchFilterDto;
 import com.motaharinia.msutility.custom.customdto.search.filter.restriction.SearchFilterOperationEnum;
 import com.motaharinia.msutility.custom.customdto.search.filter.sort.SearchFilterSortDto;
@@ -39,17 +38,17 @@ public interface SearchTools {
      */
     @NotNull
     static SearchDataDto buildSearchDataDto(@NotNull Page<?> viewPage, @NotNull SearchFilterDto searchFilterDto, @NotNull Class searchViewTypeInterface, Map<String, String> userDataMap) {
-        SearchDataDto searchDataDto = new SearchDataDto();
-        searchDataDto.setPage(searchFilterDto.getPage());
-        searchDataDto.setRecords(viewPage.getTotalElements());
-        searchDataDto.setTotal((long) viewPage.getTotalPages());
+        SearchDataDto<Object[]> searchDataDto = new SearchDataDto();
+        searchDataDto.setPageNo(searchFilterDto.getPageNo());
+        searchDataDto.setTotalRecordSize(viewPage.getTotalElements());
+        searchDataDto.setTotalPageSize((long) viewPage.getTotalPages());
         if (userDataMap != null) {
             searchDataDto.setUserDataMap(userDataMap);
         }
 
         //searchDataColDtoList:
         HashMap<Integer, SearchDataColumn> indexAnnotationHashMap = new HashMap<>();
-        List<SearchDataColDto> searchDataColDtoList = new ArrayList<>();
+        List<SearchDataColumnConfigDto> searchDataColumnConfigDtoList = new ArrayList<>();
 
         Set<Method> getterMethodSet1 = ReflectionUtils.getAllMethods(searchViewTypeInterface, ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
         getterMethodSet1.forEach(getterMethod -> {
@@ -59,38 +58,38 @@ public interface SearchTools {
         });
         indexAnnotationHashMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
             try {
-                SearchDataColDto searchDataColDto = new SearchDataColDto();
-                searchDataColDto.setAlign(entry.getValue().align());
-                searchDataColDto.setFormatter(entry.getValue().formatter());
-                searchDataColDto.setIndex(String.valueOf(entry.getValue().index()));
-                searchDataColDto.setName(entry.getValue().name());
-                searchDataColDto.setSearchable(entry.getValue().searchable());
-                searchDataColDto.setSearchType(entry.getValue().searchType());
-                searchDataColDto.setSortable(entry.getValue().sortable());
-                searchDataColDto.setSortType(entry.getValue().sortType());
-                searchDataColDto.setWidth(entry.getValue().width());
-                if (searchDataColDto.getSortType().equals(SearchDataColSortTypeEnum.TEXT)) {
-                    searchDataColDto.setSearchFilterOperationList(Arrays.asList(SearchFilterOperationEnum.EQUAL, SearchFilterOperationEnum.MATCH, SearchFilterOperationEnum.MATCH_END, SearchFilterOperationEnum.MATCH_START, SearchFilterOperationEnum.IN, SearchFilterOperationEnum.NOT_IN));
+                SearchDataColumnConfigDto searchDataColumnConfigDto = new SearchDataColumnConfigDto();
+                searchDataColumnConfigDto.setAlign(entry.getValue().align());
+                searchDataColumnConfigDto.setFormatter(entry.getValue().formatter());
+                searchDataColumnConfigDto.setIndex(String.valueOf(entry.getValue().index()));
+                searchDataColumnConfigDto.setName(entry.getValue().name());
+                searchDataColumnConfigDto.setSearchable(entry.getValue().searchable());
+                searchDataColumnConfigDto.setSearchType(entry.getValue().searchType());
+                searchDataColumnConfigDto.setSortable(entry.getValue().sortable());
+                searchDataColumnConfigDto.setSortType(entry.getValue().sortType());
+                searchDataColumnConfigDto.setWidth(entry.getValue().width());
+                if (searchDataColumnConfigDto.getSortType().equals(SearchDataColumnConfigSortTypeEnum.TEXT)) {
+                    searchDataColumnConfigDto.setSearchFilterOperationList(Arrays.asList(SearchFilterOperationEnum.EQUAL, SearchFilterOperationEnum.MATCH, SearchFilterOperationEnum.MATCH_END, SearchFilterOperationEnum.MATCH_START, SearchFilterOperationEnum.IN, SearchFilterOperationEnum.NOT_IN));
                 } else {
-                    searchDataColDto.setSearchFilterOperationList(Arrays.asList(SearchFilterOperationEnum.EQUAL, SearchFilterOperationEnum.GREATER_THAN, SearchFilterOperationEnum.GREATER_THAN_EQUAL, SearchFilterOperationEnum.LESS_THAN, SearchFilterOperationEnum.LESS_THAN_EQUAL, SearchFilterOperationEnum.IN, SearchFilterOperationEnum.NOT_IN));
+                    searchDataColumnConfigDto.setSearchFilterOperationList(Arrays.asList(SearchFilterOperationEnum.EQUAL, SearchFilterOperationEnum.GREATER_THAN, SearchFilterOperationEnum.GREATER_THAN_EQUAL, SearchFilterOperationEnum.LESS_THAN, SearchFilterOperationEnum.LESS_THAN_EQUAL, SearchFilterOperationEnum.IN, SearchFilterOperationEnum.NOT_IN));
                 }
-                searchDataColDtoList.add(searchDataColDto);
+                searchDataColumnConfigDtoList.add(searchDataColumnConfigDto);
             } catch (Exception exception) {
                 throw new UtilityException(SearchTools.class, UtilityExceptionKeyEnum.SEARCH_TOOLS_EXCEPTION, exception.getMessage());
             }
         });
-        searchDataDto.setColList(searchDataColDtoList);
+        searchDataDto.setColumnConfigList(searchDataColumnConfigDtoList);
 
         //searchDataRowDtoList:
-        List<SearchDataRowDto> searchDataRowDtoList = new ArrayList<>();
+        List<Object[]> searchDataRowDtoList = new ArrayList<>();
         viewPage.stream().forEach(item -> {
             try {
-                searchDataRowDtoList.add(new SearchDataRowDto((Integer) item.getClass().getDeclaredMethod("getId").invoke(item), recursiveDataRowDtoList(item, item.getClass(), new HashMap<>(), new HashMap<>()).toArray()));
+                searchDataRowDtoList.add( recursiveDataRowDtoList(item, item.getClass(), new HashMap<>(), new HashMap<>()).toArray());
             } catch (Exception exception) {
                 throw new UtilityException(SearchTools.class, UtilityExceptionKeyEnum.SEARCH_TOOLS_EXCEPTION, exception.getMessage());
             }
         });
-        searchDataDto.setRowList(searchDataRowDtoList);
+        searchDataDto.setPageRowList(searchDataRowDtoList);
         return searchDataDto;
     }
 
@@ -243,9 +242,9 @@ public interface SearchTools {
             }
         }
         if (ObjectUtils.isEmpty(allSort)) {
-            return PageRequest.of(searchFilterDto.getPage(), searchFilterDto.getRows());
+            return PageRequest.of(searchFilterDto.getPageNo().intValue(), searchFilterDto.getPageRowSize().intValue());
         } else {
-            return PageRequest.of(searchFilterDto.getPage(), searchFilterDto.getRows(), allSort);
+            return PageRequest.of(searchFilterDto.getPageNo().intValue(), searchFilterDto.getPageRowSize().intValue(), allSort);
         }
     }
 }

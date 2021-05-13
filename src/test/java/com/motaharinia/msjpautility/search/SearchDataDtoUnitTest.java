@@ -64,8 +64,8 @@ class SearchDataDtoUnitTest {
             searchFilterSortDtoList.add(new SearchFilterSortDto("firstName", SearchFilterSortTypeEnum.ASC));
             searchFilterSortDtoList.add(new SearchFilterSortDto("lastName", SearchFilterSortTypeEnum.DSC));
             SearchFilterDto searchFilterDto = new SearchFilterDto();
-            searchFilterDto.setPage(1);
-            searchFilterDto.setRows(10);
+            searchFilterDto.setPageNo(1L);
+            searchFilterDto.setPageRowSize(10L);
             searchFilterDto.setRestrictionList(searchFilterRestrictionDtoList);
             searchFilterDto.setSortList(searchFilterSortDtoList);
 
@@ -80,7 +80,7 @@ class SearchDataDtoUnitTest {
             log.info("UTILITY.searchDataDto.toString():" + searchDataDto.toString());
 
 //            String json = mapper.writeValueAsString(searchDataModel);
-            assertThat(searchDataDto.getRecords()).isNotNull();
+            assertThat(searchDataDto.getTotalRecordSize()).isNotNull();
         } catch (Exception ex) {
             fail(ex.toString());
         }

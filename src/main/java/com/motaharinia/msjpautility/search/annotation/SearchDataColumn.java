@@ -2,9 +2,11 @@ package com.motaharinia.msjpautility.search.annotation;
 
 
 
-import com.motaharinia.msutility.custom.customdto.search.data.col.SearchDataColAlignEnum;
-import com.motaharinia.msutility.custom.customdto.search.data.col.SearchDataColSearchTypeEnum;
-import com.motaharinia.msutility.custom.customdto.search.data.col.SearchDataColSortTypeEnum;
+
+
+import com.motaharinia.msutility.custom.customdto.search.data.columnconfig.SearchDataColumnConfigAlignEnum;
+import com.motaharinia.msutility.custom.customdto.search.data.columnconfig.SearchDataColumnConfigSearchTypeEnum;
+import com.motaharinia.msutility.custom.customdto.search.data.columnconfig.SearchDataColumnConfigSortTypeEnum;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -35,7 +37,7 @@ public @interface SearchDataColumn {
      * جهت نمایش افقی
      * @return خروجی:
      */
-    SearchDataColAlignEnum align() default SearchDataColAlignEnum.CENTER;
+    SearchDataColumnConfigAlignEnum align() default SearchDataColumnConfigAlignEnum.CENTER;
 
     /**
      * عرض ستون
@@ -47,13 +49,13 @@ public @interface SearchDataColumn {
      * نوع مرتب سازی ستون که عددی یا متنی است
      * @return خروجی:
      */
-    SearchDataColSortTypeEnum sortType() default SearchDataColSortTypeEnum.TEXT;
+    SearchDataColumnConfigSortTypeEnum sortType() default SearchDataColumnConfigSortTypeEnum.TEXT;
 
     /**
      * نوع جستجوی ستون که متنی یا انتخابی است
      * @return خروجی:
      */
-    SearchDataColSearchTypeEnum searchType() default SearchDataColSearchTypeEnum.TEXT;
+    SearchDataColumnConfigSearchTypeEnum searchType() default SearchDataColumnConfigSearchTypeEnum.TEXT;
 
     /**
      * رشته فرمت کننده ستون<br>
