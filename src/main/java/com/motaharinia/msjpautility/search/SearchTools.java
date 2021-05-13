@@ -41,7 +41,7 @@ public interface SearchTools {
         SearchDataDto<Object[]> searchDataDto = new SearchDataDto();
         searchDataDto.setPageNo(searchFilterDto.getPageNo());
         searchDataDto.setTotalRecordSize(viewPage.getTotalElements());
-        searchDataDto.setTotalPageSize((long) viewPage.getTotalPages());
+        searchDataDto.setTotalPageSize( viewPage.getTotalPages());
         if (userDataMap != null) {
             searchDataDto.setUserDataMap(userDataMap);
         }

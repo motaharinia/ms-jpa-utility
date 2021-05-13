@@ -54,8 +54,8 @@ class SearchFilterDtoUnitTest {
             List<SearchFilterSortDto> searchFilterSortDtoList = new ArrayList<>();
             searchFilterSortDtoList.add(new SearchFilterSortDto("lastName", SearchFilterSortTypeEnum.ASC));
             SearchFilterDto searchFilterDto = new SearchFilterDto();
-            searchFilterDto.setPageNo(1L);
-            searchFilterDto.setPageRowSize(10L);
+            searchFilterDto.setPageNo(1);
+            searchFilterDto.setPageRowSize(10);
             searchFilterDto.setRestrictionList(searchFilterRestrictionDtoList);
             searchFilterDto.setSortList(searchFilterSortDtoList);
 
