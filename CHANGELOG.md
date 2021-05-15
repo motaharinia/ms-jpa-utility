@@ -83,3 +83,9 @@
   * moved search/filter and search/data to MsUtility version to 0.0.13
   * deleted unused application.properties, application-dev.properties, application-com.properties
 * Fixed:
+
+#### [0.0.14] - 2021-05-15
+* Added:
+* Changed:
+  * update MsUtility version to 0.0.14
+* Fixed:
