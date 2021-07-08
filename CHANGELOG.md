@@ -126,9 +126,14 @@
   * update MsUtility version to 0.0.20
 * Fixed:
 
-
 #### [0.0.21] - 2021-06-19
 * Added:
 * Changed:
   * update MsUtility version to 0.0.21
+* Fixed:
+
+#### [0.0.22] - 2021-07-08
+* Added:
+* Changed:
+  * update MsUtility version to 0.0.22
 * Fixed:
