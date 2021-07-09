@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.motaharinia</groupId>
     <artifactId>MsJpaUtility</artifactId>
-    <version>0.0.22</version>
+    <version>0.0.23</version>
     <name>MsJpaUtility</name>
     <description>Motaharinia MsJpaUtility</description>
 
@@ -150,7 +150,7 @@
         <dependency>
             <groupId>com.motaharinia</groupId>
             <artifactId>MsUtility</artifactId>
-            <version>0.0.21</version>
+            <version>0.0.23</version>
         </dependency>
     </dependencies>
 
