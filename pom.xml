@@ -9,8 +9,8 @@
         <relativePath/> <!-- lookup parent from jparepository -->
     </parent>
     <groupId>com.motaharinia</groupId>
-    <artifactId>MsJpaUtility</artifactId>
-    <version>0.0.23</version>
+    <artifactId>ms-jpa-utility</artifactId>
+    <version>0.0.24</version>
     <name>MsJpaUtility</name>
     <description>Motaharinia MsJpaUtility</description>
 
@@ -149,8 +149,8 @@
         <!--MsUtility-->
         <dependency>
             <groupId>com.motaharinia</groupId>
-            <artifactId>MsUtility</artifactId>
-            <version>0.0.23</version>
+            <artifactId>ms-utility</artifactId>
+            <version>0.0.24</version>
         </dependency>
     </dependencies>
 

@@ -143,3 +143,10 @@
 * Changed:
   * update MsUtility version to 0.0.23
 * Fixed:
+
+#### [0.0.24] - 2021-07-19
+* Added:
+* Changed:
+  * update MsUtility version to 0.0.24
+  * changed artifactId
+* Fixed:
