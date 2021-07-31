@@ -148,5 +148,11 @@
 * Added:
 * Changed:
   * update MsUtility version to 0.0.24
-  * changed artifactId
+  * changed artifactId to ms-jpa-utility
+* Fixed:
+
+#### [0.0.25] - 2021-07-31
+* Added:
+* Changed:
+  * update ms-utility version to 0.0.25
 * Fixed:
