@@ -10,11 +10,12 @@
     </parent>
     <groupId>com.motaharinia</groupId>
     <artifactId>ms-jpa-utility</artifactId>
-    <version>0.0.26</version>
+    <version>0.0.27</version>
     <name>MsJpaUtility</name>
     <description>Motaharinia MsJpaUtility</description>
 
     <properties>
+        <!--general properties-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
@@ -150,7 +151,7 @@
         <dependency>
             <groupId>com.motaharinia</groupId>
             <artifactId>ms-utility</artifactId>
-            <version>0.0.26</version>
+            <version>0.0.27</version>
         </dependency>
     </dependencies>
 
