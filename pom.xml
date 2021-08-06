@@ -146,7 +146,7 @@
             <artifactId>reflections</artifactId>
             <version>0.9.12</version>
         </dependency>
-        <!--MsUtility-->
+        <!--ms-utility-->
         <dependency>
             <groupId>com.motaharinia</groupId>
             <artifactId>ms-utility</artifactId>
