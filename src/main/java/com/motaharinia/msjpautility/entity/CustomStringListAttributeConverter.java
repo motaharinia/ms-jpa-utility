@@ -15,14 +15,14 @@ import java.util.stream.Collectors;
  *     این کلاس مبدلی را ایجاد میکند که میتوان با گذاشتن آن بر روی فیلدهای از جنس لیست رشته در انتیتی ها آنها را در فیلد جدول دیتابیس به صورت رشته جدا شده با کاما ذخیره نمود
  */
 @Converter
-public class CustomStringAttributeConverter implements AttributeConverter<List<String>, String> {
+public class CustomStringListAttributeConverter implements AttributeConverter<List<String>, String> {
 
     @Override
-    public String convertToDatabaseColumn(List<String> list) {
-        if (ObjectUtils.isEmpty(list)) {
+    public String convertToDatabaseColumn(List<String> stringList) {
+        if (ObjectUtils.isEmpty(stringList)) {
             return "";
         }
-        return list.stream()
+        return stringList.stream()
                 .filter(Objects::nonNull)
                 .map(String::valueOf)
                 .collect(Collectors.joining(","));

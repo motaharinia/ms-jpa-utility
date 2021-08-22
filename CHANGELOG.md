@@ -171,6 +171,9 @@
 
 #### [0.0.28] - 2021-08-22
 * Added:
+  * added CustomIntegerSetAttributeConverter, CustomLongListAttributeConverter, CustomLongSetAttributeConverter, CustomStringSetAttributeConverter
 * Changed:
+  * changed CustomIntegerAttributeConverter name to CustomIntegerListAttributeConverter
+  * changed CustomStringAttributeConverter name to CustomStringListAttributeConverter
   * update ms-utility version to 0.0.28
 * Fixed:

@@ -13,30 +13,30 @@ import java.util.stream.Collectors;
 
 /**
 * @author https://github.com/motaharinia<br>
- *     این کلاس مبدلی را ایجاد میکند که میتوان با گذاشتن آن بر روی فیلدهای از جنس لیست عدد صحبح در انتیتی ها آنها را در فیلد جدول دیتابیس به صورت رشته جدا شده با کاما ذخیره نمود
+ *     این کلاس مبدلی را ایجاد میکند که میتوان با گذاشتن آن بر روی فیلدهای از جنس لیست عدد Long در انتیتی ها آنها را در فیلد جدول دیتابیس به صورت رشته جدا شده با کاما ذخیره نمود
  */
 @Converter
-public class CustomIntegerAttributeConverter implements AttributeConverter<List<Integer>, String> {
+public class CustomLongListAttributeConverter implements AttributeConverter<List<Long>, String> {
 
     @Override
-    public String convertToDatabaseColumn(List<Integer> list) {
-        if(ObjectUtils.isEmpty(list)){
+    public String convertToDatabaseColumn(List<Long> longList) {
+        if(ObjectUtils.isEmpty(longList)){
             return "";
         }
-        return list.stream()
+        return longList.stream()
                 .filter(Objects::nonNull)
                 .map(String::valueOf)
                 .collect(Collectors.joining(","));
     }
 
     @Override
-    public List<Integer> convertToEntityAttribute(String joined) {
+    public List<Long> convertToEntityAttribute(String joined) {
         if (ObjectUtils.isEmpty(joined)) {
             return new ArrayList<>();
         }
         List<String> listString = Arrays.asList(joined.split(","));
         return listString.stream().filter(StringUtils::isNotEmpty)
-                .map(Integer::valueOf)
+                .map(Long::valueOf)
                 .collect(Collectors.toList());
     }
 
