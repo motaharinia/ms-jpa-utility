@@ -11,7 +11,7 @@
     <groupId>com.motaharinia</groupId>
     <artifactId>ms-jpa-utility</artifactId>
     <version>0.0.30</version>
-    <name>MsJpaUtility</name>
+    <name>Ms-Jpa-Utility</name>
     <description>Motaharinia MsJpaUtility</description>
 
     <properties>
