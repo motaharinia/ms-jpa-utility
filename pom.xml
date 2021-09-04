@@ -12,7 +12,7 @@
     <artifactId>ms-jpa-utility</artifactId>
     <version>0.0.30</version>
     <name>Ms-Jpa-Utility</name>
-    <description>Ms-Jpa-Utility developed by Mostafa Motaharinia (eng.motahari@gmail.com). The project contains utilities to work with jps</description>
+    <description>Ms-Jpa-Utility developed by Mostafa Motaharinia (eng.motahari@gmail.com). The project contains utilities to work with jpa and database</description>
 
     <properties>
         <!--general properties-->
