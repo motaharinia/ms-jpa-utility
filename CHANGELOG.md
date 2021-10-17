@@ -207,3 +207,9 @@
 * Changed:
   * update ms-utility version to 0.0.33
 * Fixed:
+
+#### [0.0.34] - 2021-10-17
+* Added:
+* Changed:
+  * update ms-utility version to 0.0.34
+* Fixed:

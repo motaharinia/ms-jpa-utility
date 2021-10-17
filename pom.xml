@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.motaharinia</groupId>
     <artifactId>ms-jpa-utility</artifactId>
-    <version>0.0.33</version>
+    <version>0.0.34</version>
     <name>Ms-Jpa-Utility</name>
     <description>Ms-Jpa-Utility is developed by Mostafa Motaharinia (eng.motahari@gmail.com). The project contains utilities (work with jpa-orm-database) to make the main project code uniform and similar and it is used as a dependency in other projects</description>
 
@@ -151,7 +151,7 @@
         <dependency>
             <groupId>com.motaharinia</groupId>
             <artifactId>ms-utility</artifactId>
-            <version>0.0.33</version>
+            <version>0.0.34</version>
         </dependency>
     </dependencies>
 
