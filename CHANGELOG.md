@@ -219,3 +219,10 @@
 * Changed:
   * update ms-utility version to 0.0.35
 * Fixed:
+
+#### [0.0.36] - 2021-10-20
+* Added:
+  * added CustomPageImpl to use in test methods and anywhere we want read Page return in RestTemplate
+* Changed:
+  * update ms-utility version to 0.0.36
+* Fixed:
