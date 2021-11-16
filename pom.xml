@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.motaharinia</groupId>
     <artifactId>ms-jpa-utility</artifactId>
-    <version>0.0.39</version>
+    <version>0.0.40</version>
     <name>Ms-Jpa-Utility</name>
     <description>Ms-Jpa-Utility is developed by Mostafa Motaharinia (eng.motahari@gmail.com). The project contains utilities (work with jpa-orm-database) to make the main project code uniform and similar and it is used as a dependency in other projects</description>
 
@@ -41,11 +41,29 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <!-- Databases drivers -->
         <dependency>
             <groupId>com.oracle.ojdbc</groupId>
             <artifactId>ojdbc8</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.18</version>
+        </dependency>
+        <!-- for Spring Data 2.x -->
+        <dependency>
+            <groupId>th.co.geniustree.springdata.jpa</groupId>
+            <artifactId>specification-with-projections</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <!-- Spring Data and MongoDB -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <!-- Spring Data and Hibernate-Search -->
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-search-engine -->
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-search-orm -->
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-search-elasticsearch -->
@@ -83,13 +101,6 @@
             </exclusions>
         </dependency>
 
-<!--        &lt;!&ndash; ==========gRPC Protobuf==========&ndash;&gt;-->
-<!--        &lt;!&ndash;  to enable @GrpcServer and @GrpcClient :      https://mvnrepository.com/artifact/net.devh/grpc-server-spring-boot-starter/2.9.0.RELEASE&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>net.devh</groupId>-->
-<!--            <artifactId>grpc-spring-boot-starter</artifactId>-->
-<!--            <version>2.9.0.RELEASE</version>-->
-<!--        </dependency>-->
 
         <!--==========Test==========-->
         <dependency>
@@ -151,7 +162,7 @@
         <dependency>
             <groupId>com.motaharinia</groupId>
             <artifactId>ms-utility</artifactId>
-            <version>0.0.39</version>
+            <version>0.0.40</version>
         </dependency>
     </dependencies>
 

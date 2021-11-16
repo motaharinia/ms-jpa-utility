@@ -244,3 +244,12 @@
 * Changed:
   * update ms-utility version to 0.0.39
 * Fixed:
+
+#### [0.0.40] - 2021-11-16
+* Added:
+  * added CustomPageResponseDto to return Page as DTO
+  * added CustomDocument to use in MongoDB documents
+  * added CustomCounter to use in MongoDB services
+* Changed:
+  * update ms-utility version to 0.0.40
+* Fixed:

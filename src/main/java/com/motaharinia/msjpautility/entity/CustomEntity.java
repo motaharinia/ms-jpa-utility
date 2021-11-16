@@ -2,7 +2,6 @@
 package com.motaharinia.msjpautility.entity;
 
 import lombok.Data;
-import org.hibernate.search.annotations.Field;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -43,13 +42,11 @@ public class CustomEntity implements Serializable {
     /**
      * عدم نمایش انتیتی در بیزینس نرم افزار
      */
-    @Field
     @Column(name = "hidden")
     private Boolean hidden = false;
     /**
      * غیر فعال کردن انتیتی در بیزینس نرم افزار
      */
-    @Field
     @Column(name = "invalid")
     private Boolean invalid = false;
 
