@@ -72,11 +72,4 @@ public class CustomEntity implements Serializable {
     @LastModifiedBy
     @Column(name = "update_user_id")
     private Long updateUserId;
-
-    /**
-     * هربار که سطری ویرایش شود یک عدد یه این فیلد اضافه میشود
-     */
-    @Version
-    @Column(name = "update_version")
-    private Integer updateVersion;
 }
