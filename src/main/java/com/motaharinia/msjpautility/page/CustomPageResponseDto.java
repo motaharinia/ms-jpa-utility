@@ -30,10 +30,14 @@ public class CustomPageResponseDto<T> implements Serializable {
      */
     private int size;
     /**
+     *شماره صفحه فعلی
+     */
+    private int page;
+    /**
      * تعداد سطر واقعی موجود در این صفحه
      * مثلا ابتدا خواستیم هر صفحه 30 سطر داشته باشد ولی در دیتابیس کلا 10 سطر موجود بوده و مقدار این فیلد 10 میشود
      */
-    private int number;
+    private int numberOfElements;
     /**
      * لیست سطرهای داده
      */
@@ -60,8 +64,9 @@ public class CustomPageResponseDto<T> implements Serializable {
     public CustomPageResponseDto(Page page) {
        this.totalPages= page.getTotalPages();
        this.totalElements=page.getTotalElements();
-       this.number=page.getNumber();
        this.size=page.getSize();
+       this.page=page.getNumber();
+       this.numberOfElements=page.getNumberOfElements();
        this.content=page.getContent();
        this.first=page.isFirst();
        this.last=page.isLast();
