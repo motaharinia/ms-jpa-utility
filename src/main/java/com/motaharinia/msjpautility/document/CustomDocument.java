@@ -81,5 +81,6 @@ public class CustomDocument implements Serializable {
      * هربار که سطری ویرایش شود یک عدد یه این فیلد اضافه میشود
      */
     @Version
-    private Long version;
+    @Field(name = "update_version")
+    private Integer updateVersion;
 }

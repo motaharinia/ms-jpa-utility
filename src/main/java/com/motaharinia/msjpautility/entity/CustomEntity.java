@@ -2,10 +2,7 @@
 package com.motaharinia.msjpautility.entity;
 
 import lombok.Data;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Column;
@@ -76,4 +73,10 @@ public class CustomEntity implements Serializable {
     @Column(name = "update_user_id")
     private Long updateUserId;
 
+    /**
+     * هربار که سطری ویرایش شود یک عدد یه این فیلد اضافه میشود
+     */
+    @Version
+    @Column(name = "update_version")
+    private Integer updateVersion;
 }
