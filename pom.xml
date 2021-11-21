@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.motaharinia</groupId>
     <artifactId>ms-jpa-utility</artifactId>
-    <version>0.0.40</version>
+    <version>0.0.41</version>
     <name>Ms-Jpa-Utility</name>
     <description>Ms-Jpa-Utility is developed by Mostafa Motaharinia (eng.motahari@gmail.com). The project contains utilities (work with jpa-orm-database) to make the main project code uniform and similar and it is used as a dependency in other projects</description>
 
@@ -22,6 +22,11 @@
         <!--mapstruct and lombok-->
         <org.mapstruct.version>1.3.1.Final</org.mapstruct.version>
         <org.projectlombok.version>1.18.14</org.projectlombok.version>
+        <!--plugin-->
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <maven.source.plugin.version>3.2.0</maven.source.plugin.version>
+        <maven.javadoc.plugin.version>3.3.1</maven.javadoc.plugin.version>
+        <jacoco.maven.plugin.version>0.8.6</jacoco.maven.plugin.version>
     </properties>
 
     <dependencies>
@@ -162,7 +167,7 @@
         <dependency>
             <groupId>com.motaharinia</groupId>
             <artifactId>ms-utility</artifactId>
-            <version>0.0.40</version>
+            <version>0.0.41</version>
         </dependency>
     </dependencies>
 
@@ -199,31 +204,11 @@
                     <classifier>exec</classifier>
                 </configuration>
             </plugin>
-            <!--
-            از این پلاگین برای اضافه شدن مستندات javadoc کلاسها ، متدها و فیلدها در هنگام کامپایل توسط maven استفاده میشود
-             https://maven.apache.org/plugin-developers/cookbook/attach-source-javadoc-artifacts.html
-             -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.2.0</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <!--  maven config with mapstruct and lombok-->
+            <!--  maven compiler config (with mapstruct and lombok)-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${maven.compiler.plugin.version}</version>
                 <configuration>
                     <source>11</source>
                     <target>11</target>
@@ -246,11 +231,42 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
+            <!--maven attach source-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven.source.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--maven attach javadoc (https://maven.apache.org/plugin-developers/cookbook/attach-source-javadoc-artifacts.html)-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven.javadoc.plugin.version}</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!--  Test Code Coverage-->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.6</version>
+                <version>${jacoco.maven.plugin.version}</version>
                 <executions>
                     <execution>
                         <goals>
