@@ -25,12 +25,12 @@ public class CustomPageResponseDto<T> implements Serializable {
      */
     private long totalElements;
     /**
-     *تعداد سطر درخواستی در هر صفحه
+     * تعداد سطر درخواستی در هر صفحه
      * مثلا ابتدا خواستیم هر صفحه 30 سطر داشته باشد و مقدار این فیلد 30
      */
     private int size;
     /**
-     *شماره صفحه فعلی
+     * شماره صفحه فعلی
      */
     private int page;
     /**
@@ -59,17 +59,18 @@ public class CustomPageResponseDto<T> implements Serializable {
 
     /**
      * متد سازنده
-     * @param page
+     *
+     * @param page شیی صفحه
      */
     public CustomPageResponseDto(Page page) {
-       this.totalPages= page.getTotalPages();
-       this.totalElements=page.getTotalElements();
-       this.size=page.getSize();
-       this.page=page.getNumber();
-       this.numberOfElements=page.getNumberOfElements();
-       this.content=page.getContent();
-       this.first=page.isFirst();
-       this.last=page.isLast();
-       this.empty=page.isEmpty();
+        this.totalPages = page.getTotalPages();
+        this.totalElements = page.getTotalElements();
+        this.size = page.getSize();
+        this.page = page.getNumber();
+        this.numberOfElements = page.getNumberOfElements();
+        this.content = page.getContent();
+        this.first = page.isFirst();
+        this.last = page.isLast();
+        this.empty = page.isEmpty();
     }
 }
