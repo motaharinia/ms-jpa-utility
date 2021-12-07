@@ -260,7 +260,13 @@
   * update ms-utility version to 0.0.41
 * Fixed:
 
-#### [0.0.42] - 2021-05-12
+#### [0.0.42] - 2021-12-05
+* Added:
+* Changed:
+  * update ms-utility version to 0.0.42
+* Fixed:
+
+#### [0.0.43] - 2021-12-07
 * Added:
 * Changed:
   * update ms-utility version to 0.0.42
