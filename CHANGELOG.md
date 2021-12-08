@@ -269,5 +269,11 @@
 #### [0.0.43] - 2021-12-07
 * Added:
 * Changed:
-  * update ms-utility version to 0.0.42
+  * update ms-utility version to 0.0.43
+* Fixed:
+
+#### [0.0.44] - 2021-12-08
+* Added:
+* Changed:
+  * update ms-utility version to 0.0.44
 * Fixed:
