@@ -10,58 +10,53 @@ import java.util.List;
 
 /**
  * @author eng.motahari@gmail.com<br>
- * کلاس مدل پاسخ صفحه بندی به کلاینت
+ * Response DTO for paginated requests
  */
-
 @Data
 @NoArgsConstructor
 public class CustomPageResponseDto<T> implements Serializable {
     /**
-     * تعداد کل صفحات
+     * Total pages
+     * ex: 1000
      */
     private int totalPages;
     /**
-     * تعداد کل سطرهای موجود قبل از صفحه بندی
+     * Total rows before pagination
+     * ex: 30000
      */
     private long totalElements;
     /**
-     * تعداد سطر درخواستی در هر صفحه
-     * مثلا ابتدا خواستیم هر صفحه 30 سطر داشته باشد و مقدار این فیلد 30
+     * Page rows size
+     * ex: 30
      */
     private int size;
     /**
-     * شماره صفحه فعلی
+     * Page no
+     * ex: 0
      */
     private int page;
     /**
-     * تعداد سطر واقعی موجود در این صفحه
-     * مثلا ابتدا خواستیم هر صفحه 30 سطر داشته باشد ولی در دیتابیس کلا 10 سطر موجود بوده و مقدار این فیلد 10 میشود
+     * Current Page real rows
+     * ex: 25
      */
     private int numberOfElements;
     /**
-     * لیست سطرهای داده
+     * List of current page rows
      */
     private List<T> content = new ArrayList<>();
-
-
     /**
-     * اولین صفحه است؟
+     * Is this first page?
      */
     private boolean first;
     /**
-     * آخرین صفحه است
+     * Is this last page?
      */
     private boolean last;
     /**
-     * خالی است؟
+     * Is it empty?
      */
     private boolean empty;
 
-    /**
-     * متد سازنده
-     *
-     * @param page شیی صفحه
-     */
     public CustomPageResponseDto(Page page) {
         this.totalPages = page.getTotalPages();
         this.totalElements = page.getTotalElements();
